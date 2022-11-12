@@ -37,10 +37,9 @@ OI=sum(Ce.*(Pc1+Pc2+Pc3)); %内层目标函数
 ops=sdpsettings('solver','gurobi','kkt.dualbounds',0);
 [K,details] = kkt(CI,OI,Ce,ops); %内层模型最优性条件。建立KKT系统，其中Ce为参量
 %% 外层模型
-CO=[lb<=Ce<=ub,mean(Ce)==0.5,Pb>=0,Ps_day<=Pdis,Pb_day>=0,Pb_day<=1000*z,Ps_day>=0,Ps_day<=1000*(1-z),Pch>=0,Pch<=1000*u,Pdis>=0,Pdis<=1000*(1-u)]; %边界约束
+CO=[lb<=Ce<=ub,mean(Ce)==0.5,Pb>=0,0<=Pb_day<=1000*z,0<=Ps_day<=Pdis.*(1-z),0<=Pch<=1000*u,0<=Pdis<=1000*(1-u)]; %边界约束
 CO=[CO,Pc1+Pc2+Pc3+Pch-Pdis==Pb+Pb_day-Ps_day]; %能量平衡
 CO=[CO,sum(0.9*Pch-Pdis/0.9)==0,S(24)==2500,S>=0,S<=5000]; %SOC约束
 OO=-(details.b'*details.dual+details.f'*details.dualeq)+sum(price_s.*Ps_day-price_day_ahead.*Pb-price_b.*Pb_day); %外层目标函数
 %% 模型求解
 optimize([K,CI,CO,boundingbox([CI,CO]),details.dual<=1],-OO)
-
