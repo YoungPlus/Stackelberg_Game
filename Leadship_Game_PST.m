@@ -80,7 +80,8 @@ for t=1:24
 end
 %% 
 ops=sdpsettings('solver','cplex');
-solvesdp(C,-f,ops);
+optimize(C,-f,ops);
+%% 
 Pc=[double(Pc1),double(Pc2),double(Pc3)];
 Pb=double(Pb);
 Ps_day=double(Ps_day);
