@@ -91,4 +91,4 @@ Pch=double(Pch);
 Pdis=double(Pdis);
 Cost_total=double(f)
 Price_Charge=double(Ce);
-clear ans b_lb b_ub C Ce f L_lb L_ub L_T L_u lb M ops Pc1 Pc2 Pc3 price_b price_day_ahead price_s t T_1 T_2 T_3 u ub z
+% clear ans b_lb b_ub C Ce f L_lb L_ub L_T L_u lb M ops Pc1 Pc2 Pc3 price_b price_day_ahead price_s t T_1 T_2 T_3 u ub z
