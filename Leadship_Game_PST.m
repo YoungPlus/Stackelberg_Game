@@ -1,10 +1,11 @@
 %论文复现
 %双层博弈，KKT条件
 %魏韡, 陈玥, 刘锋, et al. 基于主从博弈的智能小区代理商定价策略及电动汽车充电管理[J]. 电网技术, 2015(4).
-clear
-clc
+clear;
+clc;
+close all;
 price_day_ahead=[0.35;0.33;0.3;0.33;0.36;0.4;0.44;0.46;0.52;0.58;0.66;0.75;0.81;0.76;0.8;0.83;0.81;0.75;0.64;0.55;0.53;0.47;0.40;0.37];
-price_b=1.2*price_day_ahead;
+price_b=1.2*price_days_ahead;
 price_s=1.2*price_day_ahead;
 lb=0.8*price_day_ahead;
 ub=1.2*price_day_ahead;
@@ -79,8 +80,9 @@ for t=1:24
     end
 end
 %% 
-ops=sdpsettings('solver','cplex');
-optimize(C,-f,ops);
+ops=sdpsettings('solver','cplex','savesolveroutput',1,'savesolverinput',1);
+result=optimize(C,-f,ops);
+z2=dual(C(1));
 %% 
 Pc=[double(Pc1),double(Pc2),double(Pc3)];
 Pb=double(Pb);
